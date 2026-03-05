@@ -75,8 +75,8 @@ export function Blog() {
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
           >
-            <span className="blog-empty__icon">✍️</span>
-            <p className="blog-empty__title">Articles coming soon</p>
+            {/* <span className="blog-empty__icon">✍️</span>
+            <p className="blog-empty__title">Articles coming soon</p> */}
             <p className="blog-empty__subtitle">
               I'm working on writing about backend engineering, infrastructure and
               things I learn along the way. Check back later — or follow me on
@@ -122,7 +122,7 @@ export function Blog() {
           ))} */}
         </div>
 
-        <motion.p
+        {/* <motion.p
           className="blog-footer"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -139,7 +139,7 @@ export function Blog() {
           >
             Hashnode →
           </motion.a>
-        </motion.p>
+        </motion.p> */}
       </div>
     </section>
   );

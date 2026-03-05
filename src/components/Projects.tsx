@@ -103,6 +103,7 @@ const PROJECTS: Project[] = [
     status: "Production",
     preview: "/images/www.expand-in-africa.com_.png",
   },
+  /* temporarily hidden
   {
     title: "Laravel Auto Blade",
     description:
@@ -114,6 +115,7 @@ const PROJECTS: Project[] = [
     status: "Production",
     preview: "https://opengraph.githubassets.com/1/Bakugo90/Laravel-auto-blade",
   },
+  */
   {
     title: "Wadjo Radio",
     description:
@@ -128,6 +130,7 @@ const PROJECTS: Project[] = [
     status: "Archived",
     previews: ["/images/wajo_radio_1.webp", "/images/wajo_radio_2.webp", "/images/waho_radio_3.webp"],
   },
+  /* temporarily hidden
   {
     title: "Cabinet YiLiM",
     description:
@@ -139,6 +142,7 @@ const PROJECTS: Project[] = [
     status: "Production",
     preview: "/images/yilimtg.png",
   },
+  */
 ];
 
 function PreviewImage({ src, alt }: { src: string; alt: string }) {

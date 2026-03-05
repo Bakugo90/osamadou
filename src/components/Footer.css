@@ -36,23 +36,15 @@
   font-weight: 500;
 }
 
-.footer__status-dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--accent);
-  border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
+.footer__github-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.2);
-  }
+.footer__github-link:hover {
+  opacity: 0.75;
 }
 
 /* Responsive */

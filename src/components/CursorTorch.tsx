@@ -9,21 +9,35 @@ import "./CursorTorch.css";
  */
 export function CursorTorch() {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef({ x: 0, y: 0 });
+  const currentRef = useRef({ x: 0, y: 0 });
+  const rafRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const el = overlayRef.current;
     if (!el) return;
 
     const onMove = (e: MouseEvent) => {
-      el.style.setProperty("--tx", `${e.clientX}px`);
-      el.style.setProperty("--ty", `${e.clientY}px`);
-      // Reveal smoothly on first move
+      targetRef.current = { x: e.clientX, y: e.clientY };
       el.style.opacity = "1";
     };
 
     const onLeave = () => {
       el.style.opacity = "0";
     };
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const EASE = 0.12; // lower = more delay, higher = less delay
+
+    const animate = () => {
+      currentRef.current.x = lerp(currentRef.current.x, targetRef.current.x, EASE);
+      currentRef.current.y = lerp(currentRef.current.y, targetRef.current.y, EASE);
+      el.style.setProperty("--tx", `${currentRef.current.x}px`);
+      el.style.setProperty("--ty", `${currentRef.current.y}px`);
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
 
     window.addEventListener("mousemove", onMove);
     document.documentElement.addEventListener("mouseleave", onLeave);
@@ -33,6 +47,7 @@ export function CursorTorch() {
       window.removeEventListener("mousemove", onMove);
       document.documentElement.removeEventListener("mouseleave", onLeave);
       document.documentElement.removeEventListener("mouseenter", onMove as EventListener);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 

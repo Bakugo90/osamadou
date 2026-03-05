@@ -12,8 +12,15 @@ export const Footer = () => {
           </p>
           <div className="footer__meta">
             <span className="footer__status">
-              <span className="footer__status-dot"></span>
-              Available for work
+              Built with love by{" "}
+              <a
+                href="https://github.com/Bakugo90"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__github-link"
+              >
+                Bakugo90
+              </a>
             </span>
           </div>
         </div>

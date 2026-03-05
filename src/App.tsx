@@ -153,14 +153,14 @@ function App() {
           </div>
         </section>
 
-        {/* Skills Section */}
-        <Skills />
-
         {/* Projects Section */}
         <Projects />
 
         {/* Experience Section */}
         <Experience />
+
+        {/* Skills Section */}
+        <Skills />
 
         {/* Blog Section */}
         <Blog />
