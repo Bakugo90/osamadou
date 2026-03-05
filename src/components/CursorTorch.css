@@ -1,0 +1,36 @@
+/* ===== CURSOR TORCH ===== */
+/*
+  A fixed full-screen overlay that adds a soft radial light glow
+  wherever the cursor moves — no darkening, no masking.
+  --tx / --ty are updated on every mousemove via direct DOM style.setProperty()
+  so this never triggers a React re-render.
+*/
+.cursor-torch {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  mix-blend-mode: screen; /* additive light — brightens what's beneath */
+
+  /* Multi-level warm glow:
+     core  → near-white soft light
+     mid   → faint accent tint
+     edge  → fully transparent (page untouched) */
+  background: radial-gradient(
+    circle at var(--tx, 50%) var(--ty, 50%),
+    rgba(255, 255, 240, 0.11)   0px,
+    rgba(180, 230, 255, 0.07)  110px,
+    rgba(94,  241, 255, 0.04)  220px,
+    transparent                380px
+  );
+}
+
+/* Disable on touch devices */
+@media (hover: none) {
+  .cursor-torch {
+    display: none;
+  }
+}
+

@@ -1,0 +1,201 @@
+/* ===== EXPERIENCE SECTION ===== */
+.exp-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== ROW ===== */
+.exp-row {
+  border-bottom: 1px solid var(--bg-subtle);
+  transition: background 200ms ease;
+}
+
+.exp-row:first-child {
+  border-top: 1px solid var(--bg-subtle);
+}
+
+/* ===== HEADER (button) ===== */
+.exp-row__header {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+  padding: var(--space-5) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  transition: background 150ms ease;
+}
+
+.exp-row__header:hover .exp-row__role {
+  color: var(--accent);
+}
+
+/* Left column: chevron + meta */
+.exp-row__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+  min-width: 200px;
+}
+
+.exp-row__chevron {
+  display: flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  transition: color 200ms ease;
+}
+
+.exp-row--open .exp-row__chevron {
+  color: var(--accent);
+}
+
+.exp-row__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.exp-row__period {
+  color: var(--text-secondary);
+}
+
+.exp-row__sep {
+  color: var(--text-tertiary);
+}
+
+.exp-row__type {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 10px;
+}
+
+/* Right column: role + company + location */
+.exp-row__right {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.exp-row__role {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: color 200ms ease;
+}
+
+.exp-row__company {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.exp-row__location {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-left: auto;
+}
+
+/* ===== ACCORDION BODY ===== */
+.exp-row__body {
+  overflow: hidden;
+}
+
+.exp-row__body-inner {
+  padding: 0 0 var(--space-5) calc(14px + var(--space-3) + 200px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.exp-row__bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.exp-row__bullet {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-left: var(--space-4);
+  position: relative;
+}
+
+.exp-row__bullet::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--text-tertiary);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* Tech pills — same as Skills/Projects */
+.exp-row__techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+}
+
+.exp-tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.exp-tech__icon {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.exp-tech__name {
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .exp-row__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+
+  .exp-row__left {
+    min-width: unset;
+  }
+
+  .exp-row__location {
+    margin-left: 0;
+  }
+
+  .exp-row__body-inner {
+    padding-left: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .exp-row__role {
+    font-size: 14px;
+  }
+
+  .exp-row__right {
+    gap: var(--space-2);
+  }
+}

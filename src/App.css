@@ -1,0 +1,336 @@
+﻿/* ============================================
+   APP STYLES — MINIMAL REDESIGN
+   ============================================ */
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Available badge — floats centered above the grid */
+.hero__available-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-6);
+}
+
+/* Two-column grid */
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-9);
+  align-items: center;
+}
+
+/* ── LEFT COLUMN ── */
+.hero__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+/* "Hi, I'm Samadou 👋" */
+.hero__greeting {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero__wave {
+  display: inline-block;
+  animation: wave 2.4s ease-in-out infinite;
+  transform-origin: 70% 80%;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  15%       { transform: rotate(18deg); }
+  30%       { transform: rotate(-8deg); }
+  45%       { transform: rotate(14deg); }
+  60%       { transform: rotate(-4deg); }
+  75%       { transform: rotate(8deg); }
+}
+
+/* Eyebrow */
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: var(--accent-muted);
+  border: 1px solid var(--accent-border);
+  border-radius: 100px;
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.hero__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.hero__title {
+  margin: 0;
+  line-height: 1.05;
+}
+
+/* Social links */
+.hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.hero__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.hero__link:hover {
+  color: var(--text-primary);
+}
+
+.hero__link--resume {
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.hero__link--resume:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── RIGHT COLUMN ── */
+.hero__right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.hero__bio {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.hero__chef {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: default;
+}
+
+.hero__chef-icon {
+  opacity: 0;
+  transform: translateY(3px) scale(0.9);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  color: var(--accent);
+}
+
+.hero__chef:hover .hero__chef-icon {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.contact-title {
+  margin: 0;
+  line-height: 1.05;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.contact-link {
+  display: inline-flex;
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: fit-content;
+}
+
+.contact-link:hover {
+  color: var(--accent);
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-7) 0;
+  line-height: 1.15;
+}
+
+/* Legacy eyebrow (kept for compat) */
+.section-eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-5);
+}
+
+/* ===== BUTTONS (kept for compatibility) ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 200ms var(--ease-in-out);
+  cursor: pointer;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border: 1px solid transparent;
+}
+
+.btn--primary:hover {
+  background: #7ef5ff;
+  color: var(--bg-primary);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: var(--border-normal);
+}
+
+.btn--secondary:hover {
+  color: var(--text-primary);
+  border-color: var(--text-tertiary);
+}
+
+/* Resume link — subtle pill treatment */
+.hero__link--resume {
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  color: var(--text-secondary);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.hero__link--resume:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* — Tablet (≤ 900px) — switch to single column */
+@media (max-width: 900px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+
+  .hero {
+    align-items: flex-start;
+    padding-top: calc(var(--space-9) + 56px); /* clear the fixed nav */
+    padding-bottom: var(--space-8);
+    min-height: 100svh;
+  }
+
+  .hero__title {
+    font-size: clamp(38px, 11vw, 60px);
+  }
+}
+
+/* — Phone (≤ 480px) — */
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: clamp(32px, 12vw, 48px);
+  }
+
+  .hero__bio {
+    font-size: 14px;
+  }
+
+  .contact-title {
+    font-size: clamp(30px, 11vw, 44px);
+  }
+}
+
+/* — Large screens (≥ 1200px) — more breathing room in right col */
+@media (min-width: 1200px) {
+  .hero__grid {
+    gap: var(--space-10);
+  }
+
+  .hero__bio {
+    font-size: 16px;
+  }
+}
+
