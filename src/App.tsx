@@ -47,7 +47,7 @@ function App() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.4, delay: 0.6 }}
                 >
-                  Hi, I'm Samadou <span className="hero__wave">👋</span>
+                  Hi, I'm Samadou Ouro-agorouko <span className="hero__wave">👋</span>
                 </motion.p>
 
                 <motion.span

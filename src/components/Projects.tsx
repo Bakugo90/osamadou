@@ -60,6 +60,17 @@ const PROJECTS: Project[] = [
     status: "Production",
   },
   {
+    title: "Marine Intelligence & Trade — ERP",
+    description:
+      "Large-scale ERP digitalising full maritime agency operations: real-time vessel tracking, port call management (arrivals, berthing, rendered services), cargo unloading, invoicing, quotations, service orders and monthly operational & financial reports — all in a single unified platform.",
+    year: "2025",
+    category: "Full-Stack",
+    technologies: ["Laravel", "PHP", "MySQL", "JavaScript", "TailwindCSS", "Docker"],
+    links: { live: "https://marineintelligency-gestion.com/" },
+    status: "Production",
+    preview: "/images/marineintelligency-gestion.com_login.png",
+  },
+  {
     title: "Yperlink Africa",
     description:
       "Networking and partnership matching platform within the Expand In Africa ecosystem, connecting African entrepreneurs, investors, and institutions to foster cross-border collaboration and business opportunities.",
@@ -92,6 +103,7 @@ const PROJECTS: Project[] = [
     status: "Production",
     preview: "/images/expandinafricapartners.preview.softr.app__autoUser=true&show-toolbar=true.png",
   },
+  /* temporarily hidden
   {
     title: "Expand In Africa",
     description:
@@ -103,6 +115,7 @@ const PROJECTS: Project[] = [
     status: "Production",
     preview: "/images/www.expand-in-africa.com_.png",
   },
+  */
   /* temporarily hidden
   {
     title: "Laravel Auto Blade",

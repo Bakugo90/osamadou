@@ -33,9 +33,9 @@ export const Header = () => {
   }, []);
 
   const navLinks = [
-    { href: "#skills", label: "Skills" },
     { href: "#work", label: "Projects" },
     { href: "#experience", label: "Experience" },
+    { href: "#skills", label: "Skills" },
     { href: "#blog", label: "Writing" },
     { href: "#contact", label: "Contact" },
   ];
