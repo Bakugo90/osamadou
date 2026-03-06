@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+﻿import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   SiNodedotjs, SiPython, SiExpress,
@@ -208,8 +208,15 @@ function PreviewGallery({ images, alt }: { images: string[]; alt: string }) {
 
 export function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [floatRect, setFloatRect] = useState<{ top: number; height: number } | null>(null);
   const active = PROJECTS[activeIndex];
   const { lang, t } = useLanguage();
+
+  useEffect(() => {
+    const onScroll = () => setFloatRect(null);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <section id="work" className="section projects-section">
@@ -226,7 +233,7 @@ export function Projects() {
 
         <div className="projects-layout">
           {/* LEFT — project list */}
-          <div className="projects-list">
+          <div className="projects-list" onMouseLeave={() => setFloatRect(null)}>
             {PROJECTS.map((project, index) => (
               <motion.div
                 key={project.title}
@@ -235,8 +242,16 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.4, delay: index * 0.07 }}
-                onMouseEnter={() => setActiveIndex(index)}
-                onClick={() => setActiveIndex(index)}
+                onMouseEnter={(e) => {
+                  setActiveIndex(index);
+                  const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                  setFloatRect({ top: r.top, height: r.height });
+                }}
+                onClick={(e) => {
+                  setActiveIndex(index);
+                  const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                  setFloatRect({ top: r.top, height: r.height });
+                }}
               >
                 <div className="project-row__top">
                   <div className="project-row__meta">
@@ -349,6 +364,46 @@ export function Projects() {
             </div>
           </div>
         </div>
+
+        {/* Floating preview — tablet/mobile hover (CSS: display:none on desktop) */}
+        <AnimatePresence>
+          {floatRect && (
+            <motion.div
+              className="projects-float"
+              style={{
+                top: Math.max(80, Math.min(
+                  floatRect.top + floatRect.height / 2 - 56,
+                  window.innerHeight - 130
+                )),
+              }}
+              initial={{ opacity: 0, x: 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 16 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.title}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.18 }}
+                  style={{ width: "100%", height: "100%" }}
+                >
+                  {active.previews ? (
+                    <PreviewGallery images={active.previews} alt={active.title} />
+                  ) : active.preview ? (
+                    <PreviewImage src={active.preview} alt={`${active.title} preview`} />
+                  ) : (
+                    <div className="projects-preview__placeholder">
+                      <span className="projects-preview__placeholder-title">{active.title}</span>
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <motion.p
           className="projects-footer"

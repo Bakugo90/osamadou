@@ -6,7 +6,7 @@
   z-index: 1000;
   transition: top 300ms var(--ease-in-out);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 8px;
 }
@@ -67,19 +67,27 @@
 
 /* ===== RESPONSIVE ===== */
 
-/* Tablet — slightly smaller items */
 @media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+  }
   .header__nav-item {
-    font-size: 11.5px;
-    padding: 4px 10px;
+    font-size: 11px;
+    padding: 4px 8px;
   }
 }
 
-/* Small phones — tightest fit */
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   .header__nav-item {
     font-size: 10.5px;
-    padding: 4px 7px;
+    padding: 3px 7px;
+  }
+}
+
+@media (max-width: 400px) {
+  .header__nav-item {
+    font-size: 10px;
+    padding: 3px 5px;
     letter-spacing: 0;
   }
 }
