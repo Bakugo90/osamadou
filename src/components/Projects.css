@@ -265,22 +265,6 @@
   color: var(--text-primary);
 }
 
-/* ===== FLOATING PREVIEW (tablet / mobile) ===== */
-.projects-float {
-  display: none;
-  position: fixed;
-  right: 12px;
-  width: 200px;
-  aspect-ratio: 16 / 9;
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--bg-subtle);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
-  pointer-events: none;
-  z-index: 400;
-}
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .projects-layout {
@@ -288,18 +272,8 @@
   }
 
   .projects-preview {
-    display: none;
-  }
-
-  .projects-float {
-    display: block;
-  }
-}
-
-@media (max-width: 500px) {
-  .projects-float {
-    width: 148px;
-    right: 8px;
+    position: static;
+    order: -1;
   }
 }
 
