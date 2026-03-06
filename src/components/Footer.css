@@ -47,6 +47,13 @@
   opacity: 0.75;
 }
 
+.footer__heart {
+  color: #ff4d6d;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .footer__bottom {

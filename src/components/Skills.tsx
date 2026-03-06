@@ -8,6 +8,7 @@ import {
   SiJest, SiCypress, SiGraphql,
   SiGit, SiGithub,
 } from "react-icons/si";
+import { useLanguage } from "../i18n/LanguageContext";
 import "./Skills.css";
 
 interface Tech {
@@ -84,6 +85,7 @@ const STACK: { label: string; techs: Tech[] }[] = [
 ];
 
 export function Skills() {
+  const { t } = useLanguage();
   return (
     <section id="skills" className="section skills-section">
       <div className="container">
@@ -94,7 +96,7 @@ export function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          Skills
+          {t("skills.sectionTitle")}
         </motion.h2>
 
         <div className="stack-table">
@@ -107,7 +109,7 @@ export function Skills() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.4, delay: rowIndex * 0.08 }}
             >
-              <span className="stack-row__label">{row.label}</span>
+              <span className="stack-row__label">{t(`skills.categories.${row.label}`)}</span>
               <div className="stack-row__techs">
                 {row.techs.map((tech, i) => (
                   <motion.span
@@ -142,8 +144,8 @@ export function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.2 }}
         >
-          Always evolving — currently diving into{" "}
-          <span className="skills-learning__highlight">Kubernetes</span> and{" "}
+          {t("skills.learning")}{" "}
+          <span className="skills-learning__highlight">Kubernetes</span> {t("skills.learningAnd")}{" "}
           <span className="skills-learning__highlight">cloud-native technologies</span>.
         </motion.p>
       </div>

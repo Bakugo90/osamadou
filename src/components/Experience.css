@@ -134,10 +134,10 @@
 }
 
 .exp-row__bullet::before {
-  content: "—";
+  content: "•";
   position: absolute;
   left: 0;
-  color: var(--text-tertiary);
+  color: var(--accent);
   font-size: 11px;
   line-height: 1.6;
 }

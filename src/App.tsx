@@ -7,9 +7,13 @@ import { Skills } from "./components/Skills";
 import { Experience } from "./components/Experience";
 import { Blog } from "./components/Blog";
 import { CursorTorch } from "./components/CursorTorch";
+import { useLanguage } from "./i18n/LanguageContext";
 import "./App.css";
 
 function App() {
+  const { t, tArr } = useLanguage();
+  const [heroT1, heroT2, heroT3] = tArr("hero.title");
+  const [contactL1, contactL2] = tArr("contact.heading");
   return (
     <>
       <CursorTorch />
@@ -28,7 +32,7 @@ function App() {
             >
               <span className="hero__badge">
                 <span className="hero__badge-dot" />
-                Available for new opportunities
+                {t("hero.badge")}
               </span>
             </motion.div>
 
@@ -47,7 +51,7 @@ function App() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.4, delay: 0.6 }}
                 >
-                  Hi, I'm Samadou Ouro-agorouko <span className="hero__wave">👋</span>
+                  {t("hero.greeting")} <span className="hero__wave">👋</span>
                 </motion.p>
 
                 <motion.span
@@ -56,7 +60,7 @@ function App() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.4, delay: 0.7 }}
                 >
-                  Full Stack Engineer · Backend Specialist
+                  {t("hero.eyebrow")}
                 </motion.span>
 
                 <motion.h1
@@ -65,11 +69,11 @@ function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
                 >
-                  I build
+                  {heroT1}
                   <br />
-                  reliable systems
+                  {heroT2}
                   <br />
-                  that scale.
+                  {heroT3}
                 </motion.h1>
 
                 <motion.div
@@ -104,7 +108,7 @@ function App() {
                     <Mail size={15} /> Email
                   </motion.a>
                   <motion.button
-                    onClick={() => alert("Resume not available yet — check back soon!")}
+                    onClick={() => alert(t("hero.resumeAlert"))}
                     className="hero__link hero__link--resume"
                     whileHover={{ x: 4 }}
                   >
@@ -121,31 +125,22 @@ function App() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.9 }}
               >
                 <p className="hero__bio">
-                  I'm a full stack engineer with a specialty in backend engineering,
-                  focused on reliable APIs, data flows and infrastructure that quietly
-                  scales in the background.
+                  {t("hero.bio1")}
                 </p>
                 <p className="hero__bio">
-                  While I can implement awesome UIs I prefer more working where product meets infrastructure: turning messy
-                  real‑world processes into services, queues and background jobs.
-                  Building backends, provisioning and orchestrating servers, and
-                  watching graphs instead of pixels makes me feel like a tiny
+                  {t("hero.bio2a")}
                   {" "}
                   <span className="hero__chef">
-                    chef
+                    {t("hero.chef")}
                     <span className="hero__chef-icon">
                       <ChefHat size={14} />
                     </span>
                   </span>
                   {" "}
-                  keeping the kitchen under control.
+                  {t("hero.bio2b")}
                 </p>
                 <p className="hero__bio">
-                  Right now I'm Backend Engineer at OrgaAfrica, helping build the
-                  operating system for African restaurants: payments, QR ordering,
-                  queueing and analytics. Before that I worked on maritime ERP,
-                  consulting SaaS, open‑source tooling and mobile/payment systems. When
-                  I'm not shipping code I'm reading manga or grinding through games.
+                  {t("hero.bio3")}
                 </p>
               </motion.div>
 
@@ -182,12 +177,12 @@ function App() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4 }}
               >
-                Contact
+                {t("contact.sectionTitle")}
               </motion.h2>
               <h2 className="contact-title">
-                Let's work
+                {contactL1}
                 <br />
-                together.
+                {contactL2}
               </h2>
               <div className="contact-links">
                 <motion.a
@@ -199,7 +194,7 @@ function App() {
                   souroagorouko@gmail.com →
                 </motion.a>
                 <motion.a
-                  href="https://linkedin.com/in/yourprofile"
+                  href="https://www.linkedin.com/in/samadou-ouro-agorouko"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-link"

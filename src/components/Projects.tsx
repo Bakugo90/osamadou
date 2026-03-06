@@ -10,11 +10,13 @@ import {
   SiNextdotjs, SiTailwindcss, SiAdonisjs, SiNestjs,
 } from "react-icons/si";
 import { Github, ExternalLink } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
 import "./Projects.css";
 
 interface Project {
   title: string;
   description: string;
+  descriptionFr?: string;
   year: string;
   category: string;
   technologies: string[];
@@ -50,9 +52,11 @@ const TECH_ICONS: Record<string, { icon: React.ReactElement; color: string }> = 
 
 const PROJECTS: Project[] = [
   {
-    title: "Orga Africa — Backend API",
+    title: "Orga Africa: Backend API",
     description:
-      "Scalable backend for a Togolese food-ordering platform, built on NestJS (modular monolith). Handles the full order lifecycle, multi-role authentication, real-time status updates, payment processing and async background jobs via AWS Lambda — engineered to sustain high order volumes with reliable, sub-200ms API response times.",
+      "Scalable backend for a Togolese food-ordering platform, built on NestJS (modular monolith). Handles the full order lifecycle, multi-role authentication, real-time status updates, payment processing and async background jobs via AWS Lambda, engineered to sustain high order volumes with reliable, sub-200ms API response times.",
+    descriptionFr:
+      "Backend scalable d'une plateforme togolaise de commande de nourriture en NestJS (monolithe modulaire). Gère le cycle complet des commandes, l'auth multi-rôle, les updates temps réel, les paiements et les jobs async via AWS Lambda, conçu pour des volumes élevés avec des réponses < 200ms.",
     year: "2025",
     category: "Backend",
     technologies: ["NestJS", "TypeScript", "PostgreSQL", "Redis", "Docker", "AWS"],
@@ -60,9 +64,11 @@ const PROJECTS: Project[] = [
     status: "Production",
   },
   {
-    title: "Marine Intelligence & Trade — ERP",
+    title: "Marine Intelligence & Trade: ERP",
     description:
-      "Large-scale ERP digitalising full maritime agency operations: real-time vessel tracking, port call management (arrivals, berthing, rendered services), cargo unloading, invoicing, quotations, service orders and monthly operational & financial reports — all in a single unified platform.",
+      "Large-scale ERP digitalising full maritime agency operations: real-time vessel tracking, port call management (arrivals, berthing, rendered services), cargo unloading, invoicing, quotations, service orders and monthly operational & financial reports, all in a single unified platform.",
+    descriptionFr:
+      "ERP de grande envergure digitalisant les opérations complètes d'une agence maritime : suivi de navires en temps réel, gestion des escales (arrivées, accostage, services), déchargement, facturation, devis, ordres de service et rapports mensuels, dans une plateforme unifiée.",
     year: "2025",
     category: "Full-Stack",
     technologies: ["Laravel", "PHP", "MySQL", "JavaScript", "TailwindCSS", "Docker"],
@@ -74,6 +80,8 @@ const PROJECTS: Project[] = [
     title: "Yperlink Africa",
     description:
       "Networking and partnership matching platform within the Expand In Africa ecosystem, connecting African entrepreneurs, investors, and institutions to foster cross-border collaboration and business opportunities.",
+    descriptionFr:
+      "Plateforme de mise en réseau et de matching au sein de l'écosystème Expand In Africa, connectant entrepreneurs africains, investisseurs et institutions pour favoriser la collaboration et les opportunités transfrontalières.",
     year: "2025",
     category: "Full-Stack",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "Node.js", "AdonisJS", "AWS"],
@@ -82,9 +90,11 @@ const PROJECTS: Project[] = [
     preview: "/images/www.expand-in-africa.com_yprlink.png",
   },
   {
-    title: "Expand In Africa — Media Tracker",
+    title: "Expand In Africa: Media Tracker",
     description:
       "Media monitoring dashboard tracking press coverage and online mentions of Expand In Africa across African and global publications, providing visibility on brand reach and campaign performance.",
+    descriptionFr:
+      "Dashboard de veille médiatique suivant la couverture presse et les mentions d'Expand In Africa, offrant une visibilité sur la portée de la marque et les performances des campagnes.",
     year: "2025",
     category: "Full-Stack",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "AdonisJS", "AWS"],
@@ -93,9 +103,11 @@ const PROJECTS: Project[] = [
     preview: "/images/www.expand-in-africa.com_media-tracker.png",
   },
   {
-    title: "Expand In Africa — CRM",
+    title: "Expand In Africa: CRM",
     description:
-      "Custom CRM portal for Expand In Africa partners — manages leads, client pipelines, and onboarding workflows for the consultancy's internal teams across multiple African markets.",
+      "Custom CRM portal for Expand In Africa partners, manages leads, client pipelines, and onboarding workflows for the consultancy's internal teams across multiple African markets.",
+    descriptionFr:
+      "Portail CRM sur-mesure pour les partenaires Expand In Africa, gestion des leads, pipelines commerciaux et workflows d'onboarding pour les équipes internes sur plusieurs marchés africains.",
     year: "2025",
     category: "Full-Stack",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "AdonisJS", "AWS"],
@@ -133,6 +145,8 @@ const PROJECTS: Project[] = [
     title: "Wadjo Radio",
     description:
       "Mobile radio app for Wadjo, a Togolese online radio station broadcasting the best of Togolese music and urban culture. The app was released on iOS and Android, giving listeners access to live streaming and programming from anywhere. No longer available on the official stores.",
+    descriptionFr:
+      "Application radio mobile pour Wadjo, une station togolaise diffusant le meilleur de la musique et de la culture urbaine. Disponible sur iOS et Android, n'est plus sur les stores officiels.",
     year: "2023",
     category: "Mobile",
     technologies: ["Flutter", "Laravel", "PHP"],
@@ -160,12 +174,13 @@ const PROJECTS: Project[] = [
 
 function PreviewImage({ src, alt }: { src: string; alt: string }) {
   const [status, setStatus] = useState<"loading" | "loaded" | "error">("loading");
+  const { t } = useLanguage();
   return (
     <div className="preview-img-wrap">
       {status === "loading" && <div className="preview-skeleton" />}
       {status === "error" ? (
         <div className="projects-preview__placeholder">
-          <span className="projects-preview__placeholder-title">Preview unavailable</span>
+          <span className="projects-preview__placeholder-title">{t("projects.previewUnavailable")}</span>
         </div>
       ) : (
         <img
@@ -194,6 +209,7 @@ function PreviewGallery({ images, alt }: { images: string[]; alt: string }) {
 export function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = PROJECTS[activeIndex];
+  const { lang, t } = useLanguage();
 
   return (
     <section id="work" className="section projects-section">
@@ -205,7 +221,7 @@ export function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          Projects
+          {t("projects.sectionTitle")}
         </motion.h2>
 
         <div className="projects-layout">
@@ -288,7 +304,9 @@ export function Projects() {
                 </div>
 
                 <h3 className="project-row__title">{project.title}</h3>
-                <p className="project-row__description">{project.description}</p>
+                <p className="project-row__description">
+                  {lang === "fr" && project.descriptionFr ? project.descriptionFr : project.description}
+                </p>
 
                 <div className="project-row__techs">
                   {project.technologies.map((tech) => {
@@ -339,7 +357,7 @@ export function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          More on{" "}
+          {t("projects.moreOn")}{" "}
           <motion.a
             href="https://github.com/Bakugo90"
             target="_blank"

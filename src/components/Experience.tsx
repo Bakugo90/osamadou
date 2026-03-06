@@ -10,6 +10,7 @@ import {
   SiNestjs, SiRedis, SiJest,
 } from "react-icons/si";
 import { ChevronRight } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
 import "./Experience.css";
 
 interface Experience {
@@ -19,6 +20,7 @@ interface Experience {
   location: string;
   type: string;
   description: string[];
+  descriptionFr?: string[];
   technologies: string[];
 }
 
@@ -55,12 +57,20 @@ const EXPERIENCES: Experience[] = [
     location: "Lomé, Togo",
     type: "Part-time",
     description: [
-      "Building the backend of Orga Africa's food-ordering platform in NestJS — 7 isolated domain modules (orders, restaurants, menus, payments, notifications, delivery, auth) sharing infrastructure while enabling independent iteration per domain.",
-      "Engineered the full order lifecycle: atomic stock reservation, 5-state status machine and refund flows — using idempotency keys and optimistic locking to eliminate double-submissions under peak load.",
-      "Secured REST APIs with JWT + refresh-token auth and RBAC across 3 roles — reducing unauthorised access incidents to zero since launch.",
-      "Redis for rate limiting, distributed locking and read caching — cutting direct DB load by ~40% on hot paths; <200ms p95 response times under peak load.",
+      "Building the backend of Orga Africa's food-ordering platform in NestJS: 7 isolated domain modules (orders, restaurants, menus, payments, notifications, delivery, auth) sharing infrastructure while enabling independent iteration per domain.",
+      "Engineered the full order lifecycle: atomic stock reservation, 5-state status machine and refund flows, using idempotency keys and optimistic locking to eliminate double-submissions under peak load.",
+      "Secured REST APIs with JWT + refresh-token auth and RBAC across 3 roles, reducing unauthorised access incidents to zero since launch.",
+      "Redis for rate limiting, distributed locking and read caching, cutting direct DB load by ~40% on hot paths; <200ms p95 response times under peak load.",
       "Offloaded async workloads (notifications, reports, invoices) to AWS Lambda; containerised with Docker across dev/staging/prod on AWS (RDS, ElastiCache, S3, CloudWatch).",
       ">80% test coverage with Jest: unit, integration and contract tests preventing regressions before each deploy.",
+    ],
+    descriptionFr: [
+      "Backend de la plateforme de commande de nourriture Orga Africa en NestJS : 7 modules de domaine isolés partageant l'infra tout en permettant une itération indépendante par domaine.",
+      "Cycle complet des commandes : réservation de stock atomique, machine à 5 états et flux de remboursements, clés d'idempotence et verrouillage optimiste pour éliminer les doublons en pic de charge.",
+      "APIs REST sécurisées avec JWT + refresh tokens et RBAC sur 3 rôles, zéro incident d'accès non autorisé depuis le lancement.",
+      "Redis pour rate limiting, verrouillage distribué et cache lecture, DB load réduit de ~40 % ; p95 < 200ms en charge max.",
+      "Jobs async (notifications, rapports, factures) sur AWS Lambda ; stack Docker sur AWS (RDS, ElastiCache, S3, CloudWatch).",
+      ">80\u00a0% de couverture Jest : tests unitaires, d'intégration et de contrat empêchant les régressions avant chaque déploiement.",
     ],
     technologies: ["Node.js", "NestJS", "TypeScript", "PostgreSQL", "Redis", "Docker", "AWS", "Jest"],
   },
@@ -77,6 +87,13 @@ const EXPERIENCES: Experience[] = [
       "Front-end with TailwindCSS, SCSS, Webpack and Vanilla JS: modern responsive interfaces, interactive filterable tables with PDF/Excel export, and management dashboards (KPIs, workload, port-call durations).",
       "Business document automation: dynamic generation of quotations, invoices and PDF reports from MySQL data. MySQL performance tuned with indexing, optimised queries and clean Eloquent relationships.",
     ],
+    descriptionFr: [
+      "ERP grande-échelle conçu pour digitaliser les opérations d'une agence maritime : suivi de navires temps réel, gestion d'escales (arrivées, accostage, services), déchargement, facturation, devis, ordres de service et rapports mensuels.",
+      "Backend Laravel + Eloquent ORM : modélisation complète du domaine maritime, APIs structurées et sécurisées, workflows métier avec règles d'automatisation et système de permissions multi-rôles.",
+      "Monitoring temps réel via polling optimisé : updates instantanés des statuts, visualisation des escales actives et alertes automatiques sur les anomalies.",
+      "Frontend TailwindCSS + Vanilla JS : interfaces responsives modernes, tableaux filtrables avec export PDF/Excel et dashboards de gestion (KPIs, charges, durées d'escale).",
+      "Automatisation documentaire : génération dynamique de devis, factures et rapports PDF. MySQL optimisé par indexation et requêtes Eloquent épurées.",
+    ],
     technologies: ["Laravel", "PHP", "MySQL", "JavaScript", "TailwindCSS", "REST APIs", "PHPUnit"],
   },
   {
@@ -86,10 +103,16 @@ const EXPERIENCES: Experience[] = [
     location: "Remote",
     type: "Full-time",
     description: [
-      "Built an interactive geospatial map in React.js visualising 63,000+ African organisations by region, sector and country — enabling sales teams to perform rapid multi-sector strategic analysis and identify high-value markets.",
+      "Built an interactive geospatial map in React.js visualising 63,000+ African organisations by region, sector and country, enabling sales teams to perform rapid multi-sector strategic analysis and identify high-value markets.",
       "Designed advanced filters, clustering and dynamic loading to keep the UI smooth and performant despite large datasets.",
       "Developed the official Hyperlink Africa Challenge website, including event pages, project showcases and engagement features, improving visibility and participation.",
-      "Created a portfolio platform for top candidates, highlighting their skills, achievements and innovative projects — strengthening the talent ecosystem across Africa.",
+      "Created a portfolio platform for top candidates, highlighting their skills, achievements and innovative projects, strengthening the talent ecosystem across Africa.",
+    ],
+    descriptionFr: [
+      "Carte géospatiale interactive en React.js visualisant 63 000+ organisations africaines par région, secteur et pays, permettant aux équipes commerciales d'identifier rapidement les marchés à fort potentiel.",
+      "Filtres avancés, clustering et chargement dynamique pour maintenir une UI fluide malgré de larges datasets.",
+      "Développé le site officiel du Hyperlink Africa Challenge, incluant pages d'événements, vitrines de projets et fonctionnalités d'engagement.",
+      "Plateforme portfolio pour les meilleurs candidats, valorisant compétences et projets innovants, renforçant l'écosystème de talents en Afrique.",
     ],
     technologies: ["React.js", "JavaScript", "TailwindCSS", "REST APIs", "Git", "GitHub"],
   },
@@ -102,11 +125,20 @@ const EXPERIENCES: Experience[] = [
     description: [
       "Architected and developed a large-scale, production-ready SaaS platform for business consulting teams — combining CRM, sales pipelines, lead generation, lead scoring and task management into a single unified product.",
       "Built responsive and dynamic interfaces using Next.js (React + SSR), improving user experience and reducing load times across devices.",
-      "Developed a secure and scalable backend with Node.js (AdonisJS), including RBAC enforcement and hardened access rules — leading to –25% unauthorised access attempts thanks to improved security logic.",
+      "Developed a secure and scalable backend with Node.js (AdonisJS), including RBAC enforcement and hardened access rules, leading to –25% unauthorised access attempts thanks to improved security logic.",
       "Implemented high-performance REST APIs managing 50,000+ Airtable records, including optimised pagination, caching and data transformation workflows.",
       "Designed and deployed a media library module with reliable file uploads to Amazon S3, ensuring fast access, versioning and secure storage.",
       "Leveraged AWS services, CI/CD pipelines, environment isolation and cloud-native practices to ensure maintainability and scalability.",
       "Collaborated with stakeholders to refine business requirements and translate them into scalable technical architectures.",
+    ],
+    descriptionFr: [
+      "Architecturé et développé une plateforme SaaS large-échelle pour équipes de consulting : CRM, pipelines commerciaux, lead generation, lead scoring et gestion de tâches dans un produit unifié.",
+      "Interfaces responsives en Next.js (SSR), meilleure UX et temps de chargement réduits sur tous les appareils.",
+      "Backend sécurisé Node.js (AdonisJS) avec RBAC renforcé, réduction de –25 % des tentatives d'accès non autorisé.",
+      "APIs REST haute performance gérant 50\u00a0000+ enregistrements Airtable avec pagination optimisée, cache et transformation de données.",
+      "Module médiathèque avec upload fiable vers Amazon S3 : accès rapide, versioning et stockage sécurisé.",
+      "Services AWS, pipelines CI/CD et pratiques cloud-native pour garantir maintenabilité et scalabilité.",
+      "Collaboration avec les parties prenantes pour affiner les besoins métier et les traduire en architectures techniques scalables.",
     ],
     technologies: ["Next.js", "Node.js", "TailwindCSS", "AWS", "TypeScript", "Docker", "Git", "GitHub"],
   },
@@ -117,9 +149,14 @@ const EXPERIENCES: Experience[] = [
     location: "Columbus, OHIO — Remote",
     type: "Internship",
     description: [
-      "Improved Ansible's official documentation around the check_mode feature, enhancing clarity and usability for contributors and users — PR #82536.",
-      "Refactored and optimised parts of the RISC-V OCaml codebase in the Sail architecture model, increasing maintainability, readability and computational robustness while preserving functional correctness — PR #8.",
+      "Improved Ansible's official documentation around the check_mode feature, enhancing clarity and usability for contributors and users (PR #82536).",
+      "Refactored and optimised parts of the RISC-V OCaml codebase in the Sail architecture model, increasing maintainability, readability and computational robustness while preserving functional correctness (PR #8).",
       "Collaborated within the open-source community by participating in reviews, discussions and iterative improvements across multiple repositories.",
+    ],
+    descriptionFr: [
+      "Amélioration de la documentation officielle Ansible autour de check_mode, clarifiant l'usage pour contributeurs et utilisateurs (PR #82536).",
+      "Refactorisation et optimisation du codebase OCaml RISC-V dans le modèle Sail, améliorant maintenabilité et robustesse sans altérer la correction fonctionnelle (PR #8).",
+      "Collaboration active dans la communauté open source : revues de code, discussions et améliorations itératives sur plusieurs dépôts.",
     ],
     technologies: ["Python", "Git", "GitHub"],
   },
@@ -135,6 +172,12 @@ const EXPERIENCES: Experience[] = [
       "Built secure REST APIs, optimised database queries and implemented robust authentication / authorisation flows.",
       "Set up and maintained CI/CD pipelines (GitHub Actions / GitLab CI) enabling weekly deployments and faster delivery cycles.",
     ],
+    descriptionFr: [
+      "Développement d'expériences mobiles bout en bout pour 3 applications Android/iOS, UI Flutter et APIs backend Laravel.",
+      "Intégration de passerelles de paiement africaines (dont mobile money), taux de succès porté à 98 % via gestion d'erreurs, webhooks et logique de retry améliorés.",
+      "APIs REST sécurisées, queries DB optimisées et flux d'authentification / autorisation robustes.",
+      "Pipelines CI/CD (GitHub Actions / GitLab CI) configurés et maintenus, déploiements hebdomadaires et cycles de livraison accélérés.",
+    ],
     technologies: ["Flutter", "Laravel", "PHP", "MySQL", "GitHub Actions", "Docker", "Git", "GitHub"],
   },
   {
@@ -145,8 +188,13 @@ const EXPERIENCES: Experience[] = [
     type: "Freelance",
     description: [
       "Led the full redevelopment and hardening of YiLiM's WordPress website using PHP, with a strong focus on performance, security and SEO.",
-      "Crafted and executed a tailored SEO strategy — technical optimisation, targeted content and internal linking — delivering over 60% growth in organic traffic within three months.",
+      "Crafted and executed a tailored SEO strategy: technical optimisation, targeted content and internal linking, delivering over 60% growth in organic traffic within three months.",
       "Achieved first-page rankings on Google for several high-value keywords relevant to YiLiM's business, directly boosting online visibility and inbound traffic.",
+    ],
+    descriptionFr: [
+      "Refonte complète et renforcement du site WordPress de YiLiM en PHP, fort accent sur performance, sécurité et SEO.",
+      "Stratégie SEO sur-mesure : optimisation technique, contenu ciblé et maillage interne, générant +60 % de trafic organique en trois mois.",
+      "Positionnement en première page Google sur plusieurs mots-clés stratégiques, boostant directement visibilité et trafic entrant.",
     ],
     technologies: ["PHP", "WordPress", "MySQL", "Git", "GitHub"],
   },
@@ -154,6 +202,7 @@ const EXPERIENCES: Experience[] = [
 
 export function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { lang, t } = useLanguage();
 
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
 
@@ -167,7 +216,7 @@ export function Experience() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          Work Experience
+          {t("experience.sectionTitle")}
         </motion.h2>
 
         <div className="exp-list">
@@ -222,7 +271,7 @@ export function Experience() {
                     >
                       <div className="exp-row__body-inner">
                         <ul className="exp-row__bullets">
-                          {exp.description.map((line, i) => (
+                          {(lang === "fr" && exp.descriptionFr ? exp.descriptionFr : exp.description).map((line, i) => (
                             <li key={i} className="exp-row__bullet">
                               {line}
                             </li>
@@ -230,12 +279,12 @@ export function Experience() {
                         </ul>
                         <div className="exp-row__techs">
                           {exp.technologies.map((tech) => {
-                            const t = TECH_ICONS[tech];
+                            const techIcon = TECH_ICONS[tech];
                             return (
                               <span key={tech} className="exp-tech">
-                                {t && (
-                                  <span className="exp-tech__icon" style={{ color: t.color }}>
-                                    {t.icon}
+                                {techIcon && (
+                                  <span className="exp-tech__icon" style={{ color: techIcon.color }}>
+                                    {techIcon.icon}
                                   </span>
                                 )}
                                 <span className="exp-tech__name">{tech}</span>

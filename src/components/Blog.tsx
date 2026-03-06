@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 // import { ArrowUpRight } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
 import "./Blog.css";
 
 // interface Article {
@@ -54,6 +55,7 @@ import "./Blog.css";
 // ];
 
 export function Blog() {
+  const { t } = useLanguage();
   return (
     <section id="blog" className="section blog-section">
       <div className="container">
@@ -64,7 +66,7 @@ export function Blog() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          Writing
+          {t("blog.sectionTitle")}
         </motion.h2>
 
         <div className="blog-list blog-list--empty">
@@ -78,9 +80,7 @@ export function Blog() {
             {/* <span className="blog-empty__icon">✍️</span>
             <p className="blog-empty__title">Articles coming soon</p> */}
             <p className="blog-empty__subtitle">
-              I'm working on writing about backend engineering, infrastructure and
-              things I learn along the way. Check back later — or follow me on
-              Hashnode to get notified.
+              {t("blog.emptyState")}
             </p>
           </motion.div>
           {/* Will be used later when articles are available */}
