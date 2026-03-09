@@ -11,7 +11,7 @@ import { useLanguage } from "./i18n/LanguageContext";
 import "./App.css";
 
 function App() {
-  const { t, tArr } = useLanguage();
+  const { t, tArr, lang } = useLanguage();
   const [heroT1, heroT2, heroT3] = tArr("hero.title");
   const [contactL1, contactL2] = tArr("contact.heading");
   return (
@@ -107,13 +107,14 @@ function App() {
                   >
                     <Mail size={15} /> Email
                   </motion.a>
-                  <motion.button
-                    onClick={() => alert(t("hero.resumeAlert"))}
+                  <motion.a
+                    href={lang === "fr" ? "/resume/samadou-fullstack-backend-fr.pdf" : "/resume/samadou-fullstack-backend-en.pdf"}
+                    download
                     className="hero__link hero__link--resume"
                     whileHover={{ x: 4 }}
                   >
                     <Download size={15} /> Resume
-                  </motion.button>
+                  </motion.a>
                 </motion.div>
               </motion.div>
 
