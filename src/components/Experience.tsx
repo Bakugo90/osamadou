@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   SiNodedotjs, SiNextdotjs, SiReact, SiJavascript, SiPython,
   SiPostgresql, SiMysql, SiAmazon,
-  SiFlutter, SiLaravel, SiFastapi,
+  SiFlutter, SiLaravel,
   SiPhp, SiTypescript, SiGithubactions,
   SiTailwindcss, SiWordpress, SiDocker,
   SiGit, SiGithub,
   SiNestjs, SiRedis, SiJest,
-  SiSymfony, SiSentry,
+  SiSymfony, SiSentry, SiRabbitmq, SiAmazoncloudwatch,
 } from "react-icons/si";
 import { ChevronRight, ExternalLink } from "lucide-react";
 import { useLanguage } from "../i18n/LanguageContext";
@@ -23,6 +23,8 @@ interface Experience {
   /** Brand colour for the monogram fallback, when the company has no mark to show. */
   monogramColor?: string;
   website?: string;
+  /** Current role: gets the accent treatment and opens by default. */
+  current?: boolean;
   period: string;
   location: string;
   type: string;
@@ -34,7 +36,7 @@ interface Experience {
 const TECH_ICONS: Record<string, { icon: React.ReactElement; color: string }> = {
   "JavaScript":      { icon: <SiJavascript />,     color: "#F7DF1E" },
   "React.js":        { icon: <SiReact />,          color: "#61DAFB" },
-  "FastAPI":         { icon: <SiFastapi />,        color: "#009688" },
+  // "FastAPI":         { icon: <SiFastapi />,        color: "#009688" },
   "PostgreSQL":      { icon: <SiPostgresql />,      color: "#4169E1" },
   "MySQL":           { icon: <SiMysql />,          color: "#4479A1" },
   "TailwindCSS":     { icon: <SiTailwindcss />,     color: "#06B6D4" },
@@ -56,6 +58,8 @@ const TECH_ICONS: Record<string, { icon: React.ReactElement; color: string }> = 
   "Jest":            { icon: <SiJest />,            color: "#C21325" },
   "Symfony":         { icon: <SiSymfony />,          color: "#ffffff" },
   "Sentry":          { icon: <SiSentry />,           color: "#B14CF5" },
+  "RabbitMQ":        { icon: <SiRabbitmq />,          color: "#FF6600" },
+  "CloudWatch":      { icon: <SiAmazoncloudwatch />,  color: "#FF4F8B" },
 };
 
 const EXPERIENCES: Experience[] = [
@@ -65,22 +69,23 @@ const EXPERIENCES: Experience[] = [
     logo: "/logos/semoa.png",
     monogram: "SG",
     website: "https://www.semoa-group.com/",
+    current: true,
     period: "Apr 2026 – Present",
     location: "Lomé, Togo",
     type: "Full-time",
     description: [
-      "Build the WhatsApp Banking platform in Symfony: a multi-tenant conversational banking channel letting customers of partner banks check accounts, transfer money, buy airtime and pay bills without leaving a chat thread.",
+      "Build the WhatsApp Banking platform: a multi-tenant conversational banking channel letting customers of partner banks check accounts, transfer money, buy airtime and pay bills without leaving a chat thread.",
       "Carry stateful banking journeys over a stateless channel — session handling, interactive menus and flows on the WhatsApp Business Cloud API, with core banking and mobile money back-ends integrated behind one internal contract so onboarding a new bank stays a configuration change.",
       "Secure the money-movement path with idempotency keys, transaction state machines and reconciliation against partner ledgers, so retries on unreliable networks never produce a duplicate debit.",
-      "Run it on AWS (Elastic Beanstalk, EC2, Lambda, S3) with CloudWatch and Sentry for tracing an incident down to a single message, plus internal Next.js back-offices for the ops and support teams.",
+      "Run it on AWS with CloudWatch and Sentry for tracing an incident down to a single message, plus internal Next.js back-offices for the ops and support teams.",
     ],
     descriptionFr: [
-      "Développement de la plateforme WhatsApp Banking en Symfony : un canal de banking conversationnel multi-tenant permettant aux clients des banques partenaires de consulter leurs comptes, faire des virements, acheter du crédit et payer leurs factures sans quitter une conversation.",
+      "Développement de la plateforme WhatsApp Banking : un canal de banking conversationnel multi-tenant permettant aux clients des banques partenaires de consulter leurs comptes, faire des virements, acheter du crédit et payer leurs factures sans quitter une conversation.",
       "Porter des parcours bancaires à état sur un canal sans état — gestion de session, menus interactifs et flows sur la WhatsApp Business Cloud API, core banking et back-ends mobile money intégrés derrière un contrat interne unique pour que l'ajout d'une banque reste une affaire de configuration.",
       "Sécurisation du parcours de mouvement de fonds par clés d'idempotence, machines à états transactionnelles et réconciliation avec les ledgers partenaires : plus de double débit malgré les retries sur réseaux instables.",
-      "Exploitation sur AWS (Elastic Beanstalk, EC2, Lambda, S3) avec CloudWatch et Sentry pour tracer un incident jusqu'au message près, et back-offices internes en Next.js pour les équipes ops et support.",
+      "Exploitation sur AWS avec CloudWatch et Sentry pour tracer un incident jusqu'au message près, et back-offices internes en Next.js pour les équipes ops et support.",
     ],
-    technologies: ["Symfony", "PHP", "Next.js", "TypeScript", "AWS", "Sentry"],
+    technologies: ["Symfony", "PHP", "Next.js", "TypeScript", "RabbitMQ", "Redis", "AWS", "CloudWatch", "Sentry"],
   },
   {
     role: "Backend Engineer",
@@ -95,16 +100,16 @@ const EXPERIENCES: Experience[] = [
     description: [
       "Built the backend of Orga Africa's food-ordering platform in NestJS: 7 isolated domain modules (orders, restaurants, menus, payments, notifications, delivery, auth) sharing infrastructure while enabling independent iteration per domain.",
       "Engineered the full order lifecycle: atomic stock reservation, 5-state status machine and refund flows, using idempotency keys and optimistic locking to eliminate double-submissions under peak load.",
-      "Secured REST APIs with JWT + refresh-token auth and RBAC across 3 roles, reducing unauthorised access incidents to zero since launch.",
-      "Redis for rate limiting, distributed locking and read caching, cutting direct DB load by ~40% on hot paths; <200ms p95 response times under peak load.",
+      "Secured REST APIs with JWT + refresh-token auth and RBAC across 3 roles (customer, restaurant, admin), with permission checks enforced at the service layer rather than per-controller so a new endpoint is locked down by default.",
+      "Redis for rate limiting, distributed locking and read caching, cutting direct DB load by ~40% on hot paths; p95 stayed under 200ms on the order and menu-browsing endpoints.",
       "Offloaded async workloads (notifications, reports, invoices) to AWS Lambda; containerised with Docker across dev/staging/prod on AWS (RDS, ElastiCache, S3, CloudWatch).",
       ">80% test coverage with Jest: unit, integration and contract tests preventing regressions before each deploy.",
     ],
     descriptionFr: [
       "Backend de la plateforme de commande de nourriture Orga Africa en NestJS : 7 modules de domaine isolés partageant l'infra tout en permettant une itération indépendante par domaine.",
       "Cycle complet des commandes : réservation de stock atomique, machine à 5 états et flux de remboursements, clés d'idempotence et verrouillage optimiste pour éliminer les doublons en pic de charge.",
-      "APIs REST sécurisées avec JWT + refresh tokens et RBAC sur 3 rôles, zéro incident d'accès non autorisé depuis le lancement.",
-      "Redis pour rate limiting, verrouillage distribué et cache lecture, DB load réduit de ~40 % ; p95 < 200ms en charge max.",
+      "APIs REST sécurisées avec JWT + refresh tokens et RBAC sur 3 rôles (client, restaurant, admin), contrôles de permission portés par la couche service plutôt que par contrôleur : un nouvel endpoint est fermé par défaut.",
+      "Redis pour rate limiting, verrouillage distribué et cache lecture, DB load réduit de ~40 % ; p95 sous 200 ms sur les endpoints de commande et de consultation des menus.",
       "Jobs async (notifications, rapports, factures) sur AWS Lambda ; stack Docker sur AWS (RDS, ElastiCache, S3, CloudWatch).",
       ">80\u00a0% de couverture Jest : tests unitaires, d'intégration et de contrat empêchant les régressions avant chaque déploiement.",
     ],
@@ -120,14 +125,14 @@ const EXPERIENCES: Experience[] = [
     location: "Lomé, Togo",
     type: "Freelance",
     description: [
-      "Designed and developed a large-scale ERP to fully digitalise maritime agency operations: real-time vessel tracking, port call management (arrivals, berthing, rendered services), cargo unloading, invoicing, quotations, service orders, and monthly operational & financial reports.",
+      "Designed and developed an end-to-end ERP for maritime agency operations: vessel tracking, port call management (arrivals, berthing, rendered services), cargo unloading, invoicing, quotations, service orders, and monthly operational & financial reports.",
       "Backend with Laravel + Eloquent ORM: full domain modelling of maritime operations (vessels, port calls, services, interventions, cargo), structured and secure APIs, complex business workflows with automation rules, and a multi-role permission system for operations, accounting and management teams.",
       "Real-time monitoring via optimised polling + occasional broadcasting: instant vessel status updates, active port-call visualisation, ongoing-intervention tracking, and automatic alerts on delays or anomalies.",
       "Front-end with TailwindCSS, SCSS, Webpack and Vanilla JS: modern responsive interfaces, interactive filterable tables with PDF/Excel export, and management dashboards (KPIs, workload, port-call durations).",
       "Business document automation: dynamic generation of quotations, invoices and PDF reports from MySQL data. MySQL performance tuned with indexing, optimised queries and clean Eloquent relationships.",
     ],
     descriptionFr: [
-      "ERP grande-échelle conçu pour digitaliser les opérations d'une agence maritime : suivi de navires temps réel, gestion d'escales (arrivées, accostage, services), déchargement, facturation, devis, ordres de service et rapports mensuels.",
+      "ERP de bout en bout pour les opérations d'une agence maritime : suivi de navires, gestion d'escales (arrivées, accostage, services), déchargement, facturation, devis, ordres de service et rapports mensuels.",
       "Backend Laravel + Eloquent ORM : modélisation complète du domaine maritime, APIs structurées et sécurisées, workflows métier avec règles d'automatisation et système de permissions multi-rôles.",
       "Monitoring temps réel via polling optimisé : updates instantanés des statuts, visualisation des escales actives et alertes automatiques sur les anomalies.",
       "Frontend TailwindCSS + Vanilla JS : interfaces responsives modernes, tableaux filtrables avec export PDF/Excel et dashboards de gestion (KPIs, charges, durées d'escale).",
@@ -145,18 +150,18 @@ const EXPERIENCES: Experience[] = [
     location: "France — Remote",
     type: "Full-time",
     description: [
-      "Architected and developed a large-scale, production-ready SaaS platform for business consulting teams — combining CRM, sales pipelines, lead generation, lead scoring and task management into a single unified product.",
+      "Designed and built a production SaaS platform for business consulting teams — combining CRM, sales pipelines, lead generation, lead scoring and task management into a single unified product.",
       "Built responsive and dynamic interfaces using Next.js (React + SSR), improving user experience and reducing load times across devices.",
-      "Developed a secure and scalable backend with Node.js (AdonisJS), including RBAC enforcement and hardened access rules, leading to –25% unauthorised access attempts thanks to improved security logic.",
+      "Built the backend with Node.js (AdonisJS): RBAC and hardened access rules, every resource scoped to its organisation and authorisation checked server-side before any cross-tenant read or write.",
       "Implemented high-performance REST APIs managing 50,000+ Airtable records, including optimised pagination, caching and data transformation workflows.",
       "Designed and deployed a media library module with reliable file uploads to Amazon S3, ensuring fast access, versioning and secure storage.",
       "Leveraged AWS services, CI/CD pipelines, environment isolation and cloud-native practices to ensure maintainability and scalability.",
       "Collaborated with stakeholders to refine business requirements and translate them into scalable technical architectures.",
     ],
     descriptionFr: [
-      "Architecturé et développé une plateforme SaaS large-échelle pour équipes de consulting : CRM, pipelines commerciaux, lead generation, lead scoring et gestion de tâches dans un produit unifié.",
+      "Conception et développement d'une plateforme SaaS en production pour équipes de consulting : CRM, pipelines commerciaux, lead generation, lead scoring et gestion de tâches dans un produit unifié.",
       "Interfaces responsives en Next.js (SSR), meilleure UX et temps de chargement réduits sur tous les appareils.",
-      "Backend sécurisé Node.js (AdonisJS) avec RBAC renforcé, réduction de –25 % des tentatives d'accès non autorisé.",
+      "Backend Node.js (AdonisJS) avec RBAC et règles d'accès durcies : chaque ressource rattachée à une organisation, autorisation vérifiée côté serveur avant toute lecture ou écriture croisée entre clients.",
       "APIs REST haute performance gérant 50\u00a0000+ enregistrements Airtable avec pagination optimisée, cache et transformation de données.",
       "Module médiathèque avec upload fiable vers Amazon S3 : accès rapide, versioning et stockage sécurisé.",
       "Services AWS, pipelines CI/CD et pratiques cloud-native pour garantir maintenabilité et scalabilité.",
@@ -258,7 +263,7 @@ export function Experience() {
             return (
               <motion.div
                 key={exp.company + exp.role}
-                className={`exp-row ${isOpen ? "exp-row--open" : ""}`}
+                className={`exp-row ${isOpen ? "exp-row--open" : ""} ${exp.current ? "exp-row--current" : ""}`}
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}

@@ -95,6 +95,16 @@
   color: var(--text-secondary);
 }
 
+/* Current role — the dates carry the emphasis, no badge needed */
+.exp-row--current .exp-row__period {
+  color: var(--accent);
+}
+
+.exp-row--current .exp-row__role {
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
 .exp-row__sep {
   color: var(--text-tertiary);
 }

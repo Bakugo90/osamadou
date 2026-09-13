@@ -5,7 +5,6 @@ import { Footer } from "./components/Footer";
 import { Projects } from "./components/Projects";
 import { Skills } from "./components/Skills";
 import { Experience } from "./components/Experience";
-import { Blog } from "./components/Blog";
 import { CursorTorch } from "./components/CursorTorch";
 import { useLanguage } from "./i18n/LanguageContext";
 import "./App.css";
@@ -145,8 +144,8 @@ function App() {
         {/* Skills Section */}
         <Skills />
 
-        {/* Blog Section */}
-        <Blog />
+        {/* Writing section is intentionally unmounted until there are real posts —
+            the Blog component is kept for when that happens. */}
 
         {/* Contact Section */}
         <section id="contact" className="section contact-section">

@@ -21,6 +21,8 @@ interface Project {
   category: string;
   technologies: string[];
   links: { github?: string; live?: string; ios?: string; android?: string };
+  /** Featured work leads the section; everything else keeps its place below. */
+  featured?: boolean;
   preview?: string;
   previews?: string[];
 }
@@ -53,24 +55,26 @@ const PROJECTS: Project[] = [
   {
     title: "Orga Africa: Backend API",
     description:
-      "Scalable backend for a Togolese food-ordering platform, built on NestJS (modular monolith). Handles the full order lifecycle, multi-role authentication, real-time status updates, payment processing and async background jobs via AWS Lambda, engineered to sustain high order volumes with reliable, sub-200ms API response times.",
+      "Backend for a Togolese food-ordering platform, built as a modular monolith in NestJS: seven domain modules kept isolated so each could evolve on its own, without paying the operational cost of microservices for a team this size. Orders run through a state machine with idempotency keys and optimistic locking, so a retried request can't double-charge or oversell stock. Redis absorbs rate limiting, distributed locks and read caching; notifications, reports and invoices are pushed off the request path onto AWS Lambda.",
     descriptionFr:
-      "Backend scalable d'une plateforme togolaise de commande de nourriture en NestJS (monolithe modulaire). Gère le cycle complet des commandes, l'auth multi-rôle, les updates temps réel, les paiements et les jobs async via AWS Lambda, conçu pour des volumes élevés avec des réponses < 200ms.",
+      "Backend d'une plateforme togolaise de commande de nourriture, en monolithe modulaire NestJS : sept modules de domaine isolés pour évoluer chacun de leur côté, sans payer le coût opérationnel des microservices pour une équipe de cette taille. Les commandes passent par une machine à états avec clés d'idempotence et verrouillage optimiste : une requête rejouée ne peut ni débiter deux fois ni survendre du stock. Redis absorbe le rate limiting, les verrous distribués et le cache lecture ; notifications, rapports et factures sortent du chemin de requête vers AWS Lambda.",
     year: "2025",
     category: "Backend",
     technologies: ["NestJS", "TypeScript", "PostgreSQL", "Redis", "Docker", "AWS"],
     links: { live: "https://api.orga-africa.com/" },
+    featured: true,
   },
   {
     title: "Marine Intelligence & Trade: ERP",
     description:
-      "Large-scale ERP digitalising full maritime agency operations: real-time vessel tracking, port call management (arrivals, berthing, rendered services), cargo unloading, invoicing, quotations, service orders and monthly operational & financial reports, all in a single unified platform.",
+      "End-to-end ERP for maritime agency operations: vessel tracking, port calls (arrivals, berthing, rendered services), cargo unloading, invoicing, quotations, service orders and monthly reports in one platform. Built on Laravel with the maritime domain modelled explicitly — vessels, port calls, interventions, cargo — so business workflows and automation rules sit on real entities rather than ad-hoc tables. Live monitoring runs on optimised polling instead of a full realtime stack, which matched the update frequency the agency actually needed.",
     descriptionFr:
-      "ERP de grande envergure digitalisant les opérations complètes d'une agence maritime : suivi de navires en temps réel, gestion des escales (arrivées, accostage, services), déchargement, facturation, devis, ordres de service et rapports mensuels, dans une plateforme unifiée.",
+      "ERP de bout en bout pour les opérations d'une agence maritime : suivi de navires, escales (arrivées, accostage, services), déchargement, facturation, devis, ordres de service et rapports mensuels dans une seule plateforme. Bâti sur Laravel avec le domaine maritime modélisé explicitement — navires, escales, interventions, cargaison — pour que les workflows métier et les règles d'automatisation reposent sur de vraies entités plutôt que sur des tables improvisées. Le monitoring live tourne en polling optimisé plutôt qu'en stack temps réel complète, ce qui correspondait à la fréquence de mise à jour réellement utile à l'agence.",
     year: "2025",
     category: "Full-Stack",
     technologies: ["Laravel", "PHP", "MySQL", "JavaScript", "TailwindCSS", "Docker"],
     links: { live: "https://marineintelligency-gestion.com/" },
+    featured: true,
     preview: "/images/marineintelligency-gestion.com_login.png",
   },
   {
@@ -100,13 +104,14 @@ const PROJECTS: Project[] = [
   {
     title: "Expand In Africa: CRM",
     description:
-      "Custom CRM portal for Expand In Africa partners, manages leads, client pipelines, and onboarding workflows for the consultancy's internal teams across multiple African markets.",
+      "CRM portal for Expand In Africa's consulting teams: leads, client pipelines and onboarding workflows across several African markets. Backed by AdonisJS with RBAC and per-organisation scoping enforced server-side, and REST APIs over 50,000+ Airtable records — pagination, caching and transformation had to live in the API layer, since the upstream source rate-limits and can't be queried directly at that volume.",
     descriptionFr:
-      "Portail CRM sur-mesure pour les partenaires Expand In Africa, gestion des leads, pipelines commerciaux et workflows d'onboarding pour les équipes internes sur plusieurs marchés africains.",
+      "Portail CRM pour les équipes de consulting d'Expand In Africa : leads, pipelines clients et workflows d'onboarding sur plusieurs marchés africains. Backend AdonisJS avec RBAC et cloisonnement par organisation appliqué côté serveur, et APIs REST sur 50 000+ enregistrements Airtable — pagination, cache et transformation devaient vivre dans la couche API, la source amont étant rate-limitée et non interrogeable directement à ce volume.",
     year: "2025",
     category: "Full-Stack",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "AdonisJS", "AWS"],
     links: { live: "https://expandinafricapartners.preview.softr.app/" },
+    featured: true,
     preview: "/images/expandinafricapartners.preview.softr.app__autoUser=true&show-toolbar=true.png",
   },
   /* temporarily hidden
@@ -202,6 +207,13 @@ export function Projects() {
   const active = PROJECTS[activeIndex];
   const { lang, t } = useLanguage();
 
+  // Keep the flat index — the preview pane addresses PROJECTS directly.
+  const indexed = PROJECTS.map((project, index) => ({ project, index }));
+  const groups = [
+    { key: "featured", label: t("projects.featured"), items: indexed.filter((x) => x.project.featured) },
+    { key: "other", label: t("projects.other"), items: indexed.filter((x) => !x.project.featured) },
+  ].filter((group) => group.items.length > 0);
+
   return (
     <section id="work" className="section projects-section">
       <div className="container">
@@ -218,7 +230,10 @@ export function Projects() {
         <div className="projects-layout">
           {/* LEFT — project list */}
           <div className="projects-list">
-            {PROJECTS.map((project, index) => (
+            {groups.map((group) => (
+              <div key={group.key} className="projects-group">
+                <h3 className="projects-group__label">{group.label}</h3>
+            {group.items.map(({ project, index }) => (
               <motion.div
                 key={project.title}
                 className={`project-row${activeIndex === index ? " project-row--active" : ""}`}
@@ -314,6 +329,8 @@ export function Projects() {
                   })}
                 </div>
               </motion.div>
+            ))}
+              </div>
             ))}
           </div>
 

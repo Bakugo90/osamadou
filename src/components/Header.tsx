@@ -31,7 +31,7 @@ export const Header = () => {
       setIsScrolled(window.scrollY > 50);
 
       // Detect active section
-      const sections = ["skills", "work", "experience", "blog", "contact"];
+      const sections = ["skills", "work", "experience", "contact"];
       const scrollPosition = window.scrollY + 150;
 
       for (const section of sections) {
@@ -56,7 +56,6 @@ export const Header = () => {
     { href: "#work", label: t("nav.projects") },
     { href: "#experience", label: t("nav.experience") },
     { href: "#skills", label: t("nav.skills") },
-    { href: "#blog", label: t("nav.writing") },
     { href: "#contact", label: t("nav.contact") },
   ];
 

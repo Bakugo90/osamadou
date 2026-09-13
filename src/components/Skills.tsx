@@ -1,10 +1,10 @@
 ﻿import { motion } from "framer-motion";
 import {
   SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiFlutter, SiRedux,
-  SiNodedotjs, SiNestjs, SiPhp, SiLaravel,
-  SiPython, SiFastapi,
+  SiNodedotjs, SiNestjs, SiPhp, SiLaravel, SiSymfony,
+  SiPython,
   SiPostgresql, SiRedis, SiMysql, SiMongodb,
-  SiDocker, SiGithubactions, SiAmazon,
+  SiDocker, SiGithubactions, SiAmazon, SiLinux,
   SiJest, SiCypress, SiGraphql,
   SiGit, SiGithub,
 } from "react-icons/si";
@@ -17,35 +17,27 @@ interface Tech {
   color: string;
 }
 
+/* Ordered backend-first: the list itself should read as the positioning.
+   Frontend stays — it's an advantage — but it no longer opens the section. */
 const STACK: { label: string; techs: Tech[] }[] = [
-  {
-    label: "Frontend",
-    techs: [
-      { name: "JavaScript",    icon: <SiJavascript />,  color: "#F7DF1E" },
-      { name: "TypeScript",    icon: <SiTypescript />,  color: "#3178C6" },
-      { name: "React.js",      icon: <SiReact />,       color: "#61DAFB" },
-      { name: "Next.js",       icon: <SiNextdotjs />,   color: "#ffffff" },
-      { name: "Flutter",       icon: <SiFlutter />,     color: "#54C5F8" },
-      { name: "Redux Toolkit", icon: <SiRedux />,       color: "#764ABC" },
-    ],
-  },
   {
     label: "Backend",
     techs: [
+      { name: "PHP",       icon: <SiPhp />,       color: "#777BB4" },
+      { name: "Symfony",   icon: <SiSymfony />,   color: "#ffffff" },
+      { name: "Laravel",   icon: <SiLaravel />,   color: "#FF2D20" },
       { name: "Node.js",   icon: <SiNodedotjs />, color: "#339933" },
       { name: "NestJS",    icon: <SiNestjs />,    color: "#E0234E" },
       { name: "AdonisJS",  color: "#5A45FF" },
       // { name: "Express",   icon: <SiExpress />,   color: "#8A9099" },
-      { name: "PHP",       icon: <SiPhp />,       color: "#777BB4" },
-      { name: "Laravel",   icon: <SiLaravel />,   color: "#FF2D20" },
       { name: "Python",    icon: <SiPython />,    color: "#3776AB" },
       // { name: "Django",    icon: <SiDjango />,    color: "#092E20" },
-      { name: "FastAPI",   icon: <SiFastapi />,   color: "#009688" },
+      // { name: "FastAPI",   icon: <SiFastapi />,   color: "#009688" },
       // { name: "Flask",     icon: <SiFlask />,     color: "#8A9099" },
     ],
   },
   {
-    label: "Database",
+    label: "Data",
     techs: [
       { name: "PostgreSQL", icon: <SiPostgresql />, color: "#4169E1" },
       { name: "Redis",      icon: <SiRedis />,      color: "#DC382D" },
@@ -54,13 +46,27 @@ const STACK: { label: string; techs: Tech[] }[] = [
     ],
   },
   {
-    label: "DevOps",
+    label: "Infrastructure",
     techs: [
       { name: "Docker",          icon: <SiDocker />,          color: "#2496ED" },
-      { name: "GitHub Actions",  icon: <SiGithubactions />,   color: "#2088FF" },
-      { name: "Azure",           color: "#0078D4" },
       { name: "AWS",             icon: <SiAmazon />,          color: "#FF9900" },
+      { name: "Linux",           icon: <SiLinux />,           color: "#FCC624" },
+      { name: "GitHub Actions",  icon: <SiGithubactions />,   color: "#2088FF" },
+      { name: "CI/CD",           color: "#8A9099" },
+      // { name: "Azure",           color: "#0078D4" },
       { name: "Render",          color: "#46E3B7" },
+    ],
+  },
+  {
+    label: "Systems",
+    techs: [
+      { name: "REST APIs",           color: "#8A9099" },
+      { name: "SOAP",                color: "#8A9099" },
+      { name: "GraphQL",             icon: <SiGraphql />, color: "#E10098" },
+      { name: "Async jobs",          color: "#8A9099" },
+      { name: "Queues",              color: "#8A9099" },
+      { name: "Caching",             color: "#8A9099" },
+      { name: "Real-time systems",   color: "#8A9099" },
     ],
   },
   {
@@ -73,13 +79,21 @@ const STACK: { label: string; techs: Tech[] }[] = [
     ],
   },
   {
+    label: "Frontend",
+    techs: [
+      { name: "TypeScript",    icon: <SiTypescript />,  color: "#3178C6" },
+      { name: "JavaScript",    icon: <SiJavascript />,  color: "#F7DF1E" },
+      { name: "React.js",      icon: <SiReact />,       color: "#61DAFB" },
+      { name: "Next.js",       icon: <SiNextdotjs />,   color: "#ffffff" },
+      { name: "Redux Toolkit", icon: <SiRedux />,       color: "#764ABC" },
+    ],
+  },
+  {
     label: "Other",
     techs: [
-      { name: "REST APIs",  color: "#8A9099" },
-      { name: "GraphQL",    icon: <SiGraphql />, color: "#E10098" },
-      { name: "SOAP",       color: "#8A9099" },
-      { name: "Git",        icon: <SiGit />,    color: "#F05032" },
-      { name: "GitHub",     icon: <SiGithub />, color: "#ffffff" },
+      { name: "Flutter",  icon: <SiFlutter />, color: "#54C5F8" },
+      { name: "Git",      icon: <SiGit />,     color: "#F05032" },
+      { name: "GitHub",   icon: <SiGithub />,  color: "#ffffff" },
     ],
   },
 ];
