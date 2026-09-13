@@ -23,19 +23,6 @@ function App() {
         {/* Hero Section */}
         <section className="hero">
           <div className="container hero__container">
-            {/* Available badge — centered above grid */}
-            <motion.div
-              className="hero__available-wrap"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.5 }}
-            >
-              <span className="hero__badge">
-                <span className="hero__badge-dot" />
-                {t("hero.badge")}
-              </span>
-            </motion.div>
-
             <div className="hero__grid">
 
               {/* LEFT — greeting, title, links */}

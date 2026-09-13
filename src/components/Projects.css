@@ -156,39 +156,6 @@
   color: var(--text-tertiary);
 }
 
-.project-row__status {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 2px 7px;
-  border-radius: 100px;
-}
-
-.project-row__status--production {
-  background: rgba(94, 241, 255, 0.08);
-  color: var(--accent);
-  border: 1px solid var(--accent-border);
-}
-
-.project-row__status--beta {
-  background: rgba(255, 153, 0, 0.08);
-  color: #FF9900;
-  border: 1px solid rgba(255,153,0,0.3);
-}
-
-.project-row__status--development {
-  background: rgba(138, 144, 153, 0.1);
-  color: var(--text-tertiary);
-  border: 1px solid var(--bg-subtle);
-}
-
-.project-row__status--archived {
-  background: rgba(251, 146, 60, 0.08);
-  color: #FB923C;
-  border: 1px solid rgba(251, 146, 60, 0.3);
-}
-
 .project-row__actions {
   display: flex;
   align-items: center;

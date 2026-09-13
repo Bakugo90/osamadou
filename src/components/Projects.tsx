@@ -21,7 +21,6 @@ interface Project {
   category: string;
   technologies: string[];
   links: { github?: string; live?: string; ios?: string; android?: string };
-  status: "Production" | "Beta" | "Development" | "Archived";
   preview?: string;
   previews?: string[];
 }
@@ -61,7 +60,6 @@ const PROJECTS: Project[] = [
     category: "Backend",
     technologies: ["NestJS", "TypeScript", "PostgreSQL", "Redis", "Docker", "AWS"],
     links: { live: "https://api.orga-africa.com/" },
-    status: "Production",
   },
   {
     title: "Marine Intelligence & Trade: ERP",
@@ -73,7 +71,6 @@ const PROJECTS: Project[] = [
     category: "Full-Stack",
     technologies: ["Laravel", "PHP", "MySQL", "JavaScript", "TailwindCSS", "Docker"],
     links: { live: "https://marineintelligency-gestion.com/" },
-    status: "Production",
     preview: "/images/marineintelligency-gestion.com_login.png",
   },
   {
@@ -86,7 +83,6 @@ const PROJECTS: Project[] = [
     category: "Full-Stack",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "Node.js", "AdonisJS", "AWS"],
     links: { live: "https://www.expand-in-africa.com/yprlink" },
-    status: "Production",
     preview: "/images/www.expand-in-africa.com_yprlink.png",
   },
   {
@@ -99,7 +95,6 @@ const PROJECTS: Project[] = [
     category: "Full-Stack",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "AdonisJS", "AWS"],
     links: { live: "https://www.expand-in-africa.com/media-tracker" },
-    status: "Production",
     preview: "/images/www.expand-in-africa.com_media-tracker.png",
   },
   {
@@ -112,7 +107,6 @@ const PROJECTS: Project[] = [
     category: "Full-Stack",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "AdonisJS", "AWS"],
     links: { live: "https://expandinafricapartners.preview.softr.app/" },
-    status: "Production",
     preview: "/images/expandinafricapartners.preview.softr.app__autoUser=true&show-toolbar=true.png",
   },
   /* temporarily hidden
@@ -124,7 +118,6 @@ const PROJECTS: Project[] = [
     category: "Full-Stack",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "Node.js", "AdonisJS", "AWS"],
     links: { live: "https://www.expand-in-africa.com/" },
-    status: "Production",
     preview: "/images/www.expand-in-africa.com_.png",
   },
   */
@@ -137,7 +130,6 @@ const PROJECTS: Project[] = [
     category: "Open Source",
     technologies: ["PHP", "Laravel"],
     links: { github: "https://github.com/Bakugo90/Laravel-auto-blade" },
-    status: "Production",
     preview: "https://opengraph.githubassets.com/1/Bakugo90/Laravel-auto-blade",
   },
   */
@@ -154,7 +146,6 @@ const PROJECTS: Project[] = [
       ios: "https://apkcombo.com/wadjo-radio/com.radio.wadjo/",
       android: "https://wadjo-radio-togo.updatestar.com/",
     },
-    status: "Archived",
     previews: ["/images/wajo_radio_1.webp", "/images/wajo_radio_2.webp", "/images/waho_radio_3.webp"],
   },
   /* temporarily hidden
@@ -166,7 +157,6 @@ const PROJECTS: Project[] = [
     category: "Web",
     technologies: ["PHP", "WordPress", "MySQL"],
     links: { live: "https://yilimtg.com/" },
-    status: "Production",
     preview: "/images/yilimtg.png",
   },
   */
@@ -252,11 +242,6 @@ export function Projects() {
                     <span className="project-row__year">{project.year}</span>
                     <span className="project-row__separator">·</span>
                     <span className="project-row__category">{project.category}</span>
-                    <span
-                      className={`project-row__status project-row__status--${project.status.toLowerCase()}`}
-                    >
-                      {project.status}
-                    </span>
                   </div>
                   <div className="project-row__actions">
                     {project.links.github && (

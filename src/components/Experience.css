@@ -14,9 +14,16 @@
   border-top: 1px solid var(--bg-subtle);
 }
 
-/* ===== HEADER (button) ===== */
+/* ===== HEADER (toggle button + website link) ===== */
+.exp-row__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
 .exp-row__header {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: baseline;
   gap: var(--space-5);
@@ -27,6 +34,26 @@
   text-align: left;
   color: inherit;
   transition: background 150ms ease;
+}
+
+/* Link out to the company — muted at rest so it never competes with the role */
+.exp-row__site {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  opacity: 0.6;
+  transition: color 200ms ease, opacity 200ms ease;
+}
+
+.exp-row__head:hover .exp-row__site,
+.exp-row__site:focus-visible {
+  opacity: 1;
+}
+
+.exp-row__site:hover {
+  color: var(--accent);
+  opacity: 1;
 }
 
 .exp-row__header:hover .exp-row__role {
@@ -81,9 +108,60 @@
 /* Right column: role + company + location */
 .exp-row__right {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: var(--space-3);
   flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Company mark + name, kept tight so the logo reads as the company's */
+.exp-row__identity {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* Logo chip — height-locked, width follows the mark so wordmarks stay legible
+   next to square icons. The light plate keeps dark and transparent logos
+   readable on the dark canvas. */
+.exp-logo {
+  height: 22px;
+  min-width: 22px;
+  max-width: 88px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 3px;
+  border-radius: var(--radius-sm);
+  background: #f4f6f8;
+  opacity: 0.55;
+  filter: grayscale(1);
+  transition: opacity 200ms ease, filter 200ms ease;
+}
+
+.exp-row__header:hover .exp-logo,
+.exp-row--open .exp-logo {
+  opacity: 1;
+  filter: none;
+}
+
+.exp-logo__img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.exp-logo__monogram {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--bg-elevated);
 }
 
 .exp-row__role {
@@ -179,6 +257,13 @@
 
   .exp-row__left {
     min-width: unset;
+  }
+
+  /* Column header: children size to content, so claim the full width
+     and let role / company / location wrap onto their own lines. */
+  .exp-row__right {
+    width: 100%;
+    flex: 0 1 auto;
   }
 
   .exp-row__location {

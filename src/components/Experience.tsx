@@ -8,14 +8,21 @@ import {
   SiTailwindcss, SiWordpress, SiDocker,
   SiGit, SiGithub,
   SiNestjs, SiRedis, SiJest,
+  SiSymfony, SiSentry,
 } from "react-icons/si";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ExternalLink } from "lucide-react";
 import { useLanguage } from "../i18n/LanguageContext";
 import "./Experience.css";
 
 interface Experience {
   role: string;
   company: string;
+  /** Company mark shown next to the name; falls back to `monogram` if missing or broken. */
+  logo?: string;
+  monogram: string;
+  /** Brand colour for the monogram fallback, when the company has no mark to show. */
+  monogramColor?: string;
+  website?: string;
   period: string;
   location: string;
   type: string;
@@ -47,17 +54,46 @@ const TECH_ICONS: Record<string, { icon: React.ReactElement; color: string }> = 
   "NestJS":          { icon: <SiNestjs />,          color: "#E0234E" },
   "Redis":           { icon: <SiRedis />,           color: "#DC382D" },
   "Jest":            { icon: <SiJest />,            color: "#C21325" },
+  "Symfony":         { icon: <SiSymfony />,          color: "#ffffff" },
+  "Sentry":          { icon: <SiSentry />,           color: "#B14CF5" },
 };
 
 const EXPERIENCES: Experience[] = [
   {
+    role: "Software Engineer — WhatsApp Banking",
+    company: "Semoa Group",
+    logo: "/logos/semoa.png",
+    monogram: "SG",
+    website: "https://www.semoa-group.com/",
+    period: "Apr 2026 – Present",
+    location: "Lomé, Togo",
+    type: "Full-time",
+    description: [
+      "Build the WhatsApp Banking platform in Symfony: a multi-tenant conversational banking channel letting customers of partner banks check accounts, transfer money, buy airtime and pay bills without leaving a chat thread.",
+      "Carry stateful banking journeys over a stateless channel — session handling, interactive menus and flows on the WhatsApp Business Cloud API, with core banking and mobile money back-ends integrated behind one internal contract so onboarding a new bank stays a configuration change.",
+      "Secure the money-movement path with idempotency keys, transaction state machines and reconciliation against partner ledgers, so retries on unreliable networks never produce a duplicate debit.",
+      "Run it on AWS (Elastic Beanstalk, EC2, Lambda, S3) with CloudWatch and Sentry for tracing an incident down to a single message, plus internal Next.js back-offices for the ops and support teams.",
+    ],
+    descriptionFr: [
+      "Développement de la plateforme WhatsApp Banking en Symfony : un canal de banking conversationnel multi-tenant permettant aux clients des banques partenaires de consulter leurs comptes, faire des virements, acheter du crédit et payer leurs factures sans quitter une conversation.",
+      "Porter des parcours bancaires à état sur un canal sans état — gestion de session, menus interactifs et flows sur la WhatsApp Business Cloud API, core banking et back-ends mobile money intégrés derrière un contrat interne unique pour que l'ajout d'une banque reste une affaire de configuration.",
+      "Sécurisation du parcours de mouvement de fonds par clés d'idempotence, machines à états transactionnelles et réconciliation avec les ledgers partenaires : plus de double débit malgré les retries sur réseaux instables.",
+      "Exploitation sur AWS (Elastic Beanstalk, EC2, Lambda, S3) avec CloudWatch et Sentry pour tracer un incident jusqu'au message près, et back-offices internes en Next.js pour les équipes ops et support.",
+    ],
+    technologies: ["Symfony", "PHP", "Next.js", "TypeScript", "AWS", "Sentry"],
+  },
+  {
     role: "Backend Engineer",
     company: "Orga Africa",
-    period: "Nov 2025 – Present",
+    // No standalone mark — the brand is the "OrgaAfrica" wordmark in bold red.
+    monogram: "OrgaAfrica",
+    monogramColor: "#E11D1D",
+    website: "https://www.orga-africa.com/",
+    period: "Nov 2025 – Apr 2026",
     location: "Lomé, Togo",
     type: "Part-time",
     description: [
-      "Building the backend of Orga Africa's food-ordering platform in NestJS: 7 isolated domain modules (orders, restaurants, menus, payments, notifications, delivery, auth) sharing infrastructure while enabling independent iteration per domain.",
+      "Built the backend of Orga Africa's food-ordering platform in NestJS: 7 isolated domain modules (orders, restaurants, menus, payments, notifications, delivery, auth) sharing infrastructure while enabling independent iteration per domain.",
       "Engineered the full order lifecycle: atomic stock reservation, 5-state status machine and refund flows, using idempotency keys and optimistic locking to eliminate double-submissions under peak load.",
       "Secured REST APIs with JWT + refresh-token auth and RBAC across 3 roles, reducing unauthorised access incidents to zero since launch.",
       "Redis for rate limiting, distributed locking and read caching, cutting direct DB load by ~40% on hot paths; <200ms p95 response times under peak load.",
@@ -77,6 +113,9 @@ const EXPERIENCES: Experience[] = [
   {
     role: "Full Stack Engineer",
     company: "Marine Intelligence & Trade (MIT)",
+    logo: "/logos/marine-intelligence.png",
+    monogram: "MIT",
+    website: "https://marineintelligency-gestion.com/",
     period: "Jul – Sep 2025",
     location: "Lomé, Togo",
     type: "Freelance",
@@ -98,27 +137,10 @@ const EXPERIENCES: Experience[] = [
   },
   {
     role: "Full Stack Engineer",
-    company: "possible.africa",
-    period: "Aug 2024 – Jul 2025",
-    location: "Remote",
-    type: "Full-time",
-    description: [
-      "Built an interactive geospatial map in React.js visualising 63,000+ African organisations by region, sector and country, enabling sales teams to perform rapid multi-sector strategic analysis and identify high-value markets.",
-      "Designed advanced filters, clustering and dynamic loading to keep the UI smooth and performant despite large datasets.",
-      "Developed the official Hyperlink Africa Challenge website, including event pages, project showcases and engagement features, improving visibility and participation.",
-      "Created a portfolio platform for top candidates, highlighting their skills, achievements and innovative projects, strengthening the talent ecosystem across Africa.",
-    ],
-    descriptionFr: [
-      "Carte géospatiale interactive en React.js visualisant 63 000+ organisations africaines par région, secteur et pays, permettant aux équipes commerciales d'identifier rapidement les marchés à fort potentiel.",
-      "Filtres avancés, clustering et chargement dynamique pour maintenir une UI fluide malgré de larges datasets.",
-      "Développé le site officiel du Hyperlink Africa Challenge, incluant pages d'événements, vitrines de projets et fonctionnalités d'engagement.",
-      "Plateforme portfolio pour les meilleurs candidats, valorisant compétences et projets innovants, renforçant l'écosystème de talents en Afrique.",
-    ],
-    technologies: ["React.js", "JavaScript", "TailwindCSS", "REST APIs", "Git", "GitHub"],
-  },
-  {
-    role: "Full Stack Engineer",
     company: "Expand In Africa",
+    logo: "/logos/expand-in-africa.png",
+    monogram: "EIA",
+    website: "https://www.expand-in-africa.com/",
     period: "Jul 2024 – Jul 2025",
     location: "France — Remote",
     type: "Full-time",
@@ -145,6 +167,9 @@ const EXPERIENCES: Experience[] = [
   {
     role: "Open Source Developer",
     company: "Tublian",
+    logo: "/logos/tublian.png",
+    monogram: "TB",
+    website: "https://www.tublian.com/",
     period: "Dec 2023 – Feb 2024",
     location: "Columbus, OHIO — Remote",
     type: "Internship",
@@ -163,6 +188,9 @@ const EXPERIENCES: Experience[] = [
   {
     role: "Full Stack Engineer",
     company: "Acmedias",
+    logo: "/logos/acmedias.png",
+    monogram: "AC",
+    website: "https://acmedias.net/",
     period: "Jun – Dec 2023",
     location: "Lomé, Togo",
     type: "Freelance",
@@ -180,28 +208,33 @@ const EXPERIENCES: Experience[] = [
     ],
     technologies: ["Flutter", "Laravel", "PHP", "MySQL", "GitHub Actions", "Docker", "Git", "GitHub"],
   },
-  {
-    role: "PHP & WordPress Developer",
-    company: "YiLiM",
-    period: "Jan – Apr 2023",
-    location: "Lomé, Togo",
-    type: "Freelance",
-    description: [
-      "Led the full redevelopment and hardening of YiLiM's WordPress website using PHP, with a strong focus on performance, security and SEO.",
-      "Crafted and executed a tailored SEO strategy: technical optimisation, targeted content and internal linking, delivering over 60% growth in organic traffic within three months.",
-      "Achieved first-page rankings on Google for several high-value keywords relevant to YiLiM's business, directly boosting online visibility and inbound traffic.",
-    ],
-    descriptionFr: [
-      "Refonte complète et renforcement du site WordPress de YiLiM en PHP, fort accent sur performance, sécurité et SEO.",
-      "Stratégie SEO sur-mesure : optimisation technique, contenu ciblé et maillage interne, générant +60 % de trafic organique en trois mois.",
-      "Positionnement en première page Google sur plusieurs mots-clés stratégiques, boostant directement visibilité et trafic entrant.",
-    ],
-    technologies: ["PHP", "WordPress", "MySQL", "Git", "GitHub"],
-  },
 ];
 
+function CompanyLogo({ logo, monogram, monogramColor }: Pick<Experience, "logo" | "monogram" | "monogramColor">) {
+  const [broken, setBroken] = useState(false);
+  const showImage = logo && !broken;
+
+  return (
+    <span className="exp-logo" aria-hidden="true">
+      {showImage ? (
+        <img
+          src={logo}
+          alt=""
+          className="exp-logo__img"
+          loading="lazy"
+          onError={() => setBroken(true)}
+        />
+      ) : (
+        <span className="exp-logo__monogram" style={monogramColor ? { color: monogramColor } : undefined}>
+          {monogram}
+        </span>
+      )}
+    </span>
+  );
+}
+
 export function Experience() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
   const { lang, t } = useLanguage();
 
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
@@ -231,7 +264,8 @@ export function Experience() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.4, delay: index * 0.07 }}
               >
-                {/* Clickable header */}
+                {/* Clickable header — the website link sits outside the button so it stays a real link */}
+                <div className="exp-row__head">
                 <button
                   className="exp-row__header"
                   onClick={() => toggle(index)}
@@ -253,10 +287,31 @@ export function Experience() {
                   </div>
                   <div className="exp-row__right">
                     <span className="exp-row__role">{exp.role}</span>
-                    <span className="exp-row__company">@ {exp.company}</span>
+                    <span className="exp-row__identity">
+                      <CompanyLogo
+                        logo={exp.logo}
+                        monogram={exp.monogram}
+                        monogramColor={exp.monogramColor}
+                      />
+                      <span className="exp-row__company">{exp.company}</span>
+                    </span>
                     <span className="exp-row__location">{exp.location}</span>
                   </div>
                 </button>
+
+                {exp.website && (
+                  <a
+                    className="exp-row__site"
+                    href={exp.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${exp.company} website`}
+                    title={exp.company}
+                  >
+                    <ExternalLink size={13} />
+                  </a>
+                )}
+                </div>
 
                 {/* Accordion body */}
                 <AnimatePresence initial={false}>
