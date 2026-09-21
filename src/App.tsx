@@ -144,9 +144,6 @@ function App() {
         {/* Skills Section */}
         <Skills />
 
-        {/* Writing section is intentionally unmounted until there are real posts —
-            the Blog component is kept for when that happens. */}
-
         {/* Contact Section */}
         <section id="contact" className="section contact-section">
           <div className="container">
